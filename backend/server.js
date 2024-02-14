@@ -4,6 +4,9 @@ const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcryptjs');
+const routes = require('./routes');
+require('dotenv').config();
+
 
 const User = require('./models/User'); // Votre modèle Mongoose pour les utilisateurs
 // Autres modèles pour les matchs, etc.
@@ -55,13 +58,11 @@ passport.deserializeUser((id, done) => {
   });
 });
 
-// Connectez-vous à MongoDB
-mongoose.connect('mongodb://localhost/yourdbname', { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('Connecté à MongoDB'))
-  .catch(err => console.error('Impossible de se connecter à MongoDB', err));
+app.use('/api', routes);
 
-// Routes pour l'authentification, les matchs, etc.
-// ...
+mongoose.connect(process.env.MONGODB_URI)
+  .then(() => console.log('Connecté à MongoDB Atlas'))
+  .catch(err => console.error('Erreur de connexion à MongoDB Atlas', err));
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {

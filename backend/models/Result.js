@@ -6,7 +6,7 @@ const resultSchema = new mongoose.Schema({
     teamOne: Number,
     teamTwo: Number
   },
-  winner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
+  winner: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 });
 
 const Result = mongoose.model('Result', resultSchema);
