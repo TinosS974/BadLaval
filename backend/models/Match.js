@@ -6,7 +6,8 @@ const matchSchema = new mongoose.Schema({
   scoreTeamOne: { type: Number, default: 0 },
   scoreTeamTwo: { type: Number, default: 0 },
   averageRatingBeforeMatch: {type:  Number, default: 0 },
-  court: { type: Number, required: true }
+  court: { type: Number, required: true },
+  date: { type: Date, required: true }
 });
 
 const Match = mongoose.model('Match', matchSchema);

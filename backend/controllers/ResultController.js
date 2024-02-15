@@ -12,20 +12,23 @@ exports.createResult = async (req, res) => {
       return res.status(404).json({ message: 'Match non trouvé' });
     }
 
+    // Ensure scoreTeamOne and scoreTeamTwo are compared correctly to assign winnerTeam
     const winnerTeam = scoreTeamOne > scoreTeamTwo ? teamOneIds : teamTwoIds;
 
     const newResult = new Result({
       match: matchId,
       score: { teamOne: scoreTeamOne, teamTwo: scoreTeamTwo },
-      winner: winnerTeam
+      winner: winnerTeam // Directly use the array of ObjectId(s) without wrapping it into another array
     });
 
     await newResult.save();
     res.status(201).json(newResult);
   } catch (error) {
-    res.status(500).json({ message: 'Erreur lors de la création du résultat' });
+    res.status(500).json({ message: 'Erreur lors de la création du résultat', error: error.message });
+    console.log("Erreur creation resultats", error);
   }
 };
+
 
 exports.getResult = async (req, res) => {
   try {
@@ -36,5 +39,6 @@ exports.getResult = async (req, res) => {
     res.status(200).json(results);
   } catch (error) {
     res.status(500).json({ message: 'Erreur lors de la récupération des résultats' });
+    console.log(error);
   }
 };

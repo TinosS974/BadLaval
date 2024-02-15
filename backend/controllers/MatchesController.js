@@ -1,68 +1,79 @@
 const Match = require('../models/Match');
 const User = require('../models/User');
 
-// Fonction pour générer des paires de joueurs uniques
-function generateUniquePairs(players) {
-    let rounds = []; // Contiendra les rondes de matchs
-    const playerCount = players.length;
+function generateUniquePairs(playerIds) {
+    let rounds = [];
+    const playerCount = playerIds.length;
     
-    // Assurez-vous que le nombre de joueurs est pair
     if (playerCount % 2 !== 0) {
-      console.log("Le nombre de joueurs doit être pair.");
-      return;
+        console.log("Le nombre de joueurs doit être pair.");
+        return [];
     }
   
+    let ids = [...playerIds];
+  
     for (let round = 0; round < playerCount - 1; round++) {
-      let roundPairs = [];
+        let roundPairs = [];
       
-      for (let i = 0; i < playerCount / 2; i++) {
-        let pair = [players[i], players[playerCount - 1 - i]];
-        roundPairs.push(pair);
-      }
+        for (let i = 0; i < playerCount / 2; i++) {
+            let pair = [ids[i], ids[playerCount - 1 - i]];
+            roundPairs.push(pair);
+        }
       
-      // Ajoutez les paires de cette ronde aux rondes
-      rounds.push(roundPairs);
-      
-      // Faites tourner les joueurs pour la prochaine ronde, sauf le premier joueur
-      players.splice(1, 0, players.pop());
+        rounds.push(roundPairs);
+        ids.splice(1, 0, ids.pop());
     }
   
     return rounds;
-  }
-  
-  // Exemple d'utilisation avec 16 joueurs
-  let players = ['Joueur1', 'Joueur2', 'Joueur3', 'Joueur4', 'Joueur5', 'Joueur6', 'Joueur7', 'Joueur8',
-                 'Joueur9', 'Joueur10', 'Joueur11', 'Joueur12', 'Joueur13', 'Joueur14', 'Joueur15', 'Joueur16'];
-  let pairs = generateUniquePairs(players);
-  console.log(pairs);
-  
+}
 
 exports.createMatchesForSession = async (req, res) => {
-  try {
-    const players = await User.find({ eligible: true }).select('_id');
+    console.log('Requête reçue pour créer des matchs de session');
+    try {
+        const players = await User.find({}).select('firstName _id');
 
-    // Transforme les documents utilisateur en un tableau d'IDs
-    const playerIds = players.map(player => player._id);
+        const playerIds = players.map(player => player._id);
+        const rounds = generateUniquePairs(playerIds);
 
-    // Génère des paires d'IDs de joueurs
-    const pairs = generateUniquePairs(playerIds);
+        const sessionDate = req.body.date || new Date();
+        let matches = [];
+        let courtAssignment = 1;
 
-    // Associer les paires à des matchs sur les 3 terrains disponibles
-    const matches = pairs.map((pair, index) => {
-      return new Match({
-        teamOne: pair[0],
-        teamTwo: pair[1],
-        court: (index % 3) + 1 // Attribuer les terrains 1, 2, et 3 successivement
-      });
-    });
+        for (let i = 0; i < 30; i++) {
+            if (i % 10 === 0 && i !== 0) courtAssignment++; // Change court after every 10 matches
+            const roundIndex = i % rounds.length;
+            const pairIndex = Math.floor(i / rounds.length) % rounds[0].length;
+            const pair = rounds[roundIndex][pairIndex];
 
-    // Sauvegarder tous les matchs créés
-    for (const match of matches) {
-      await match.save();
+            let match = new Match({
+                teamOne: [pair[0]],
+                teamTwo: [pair[1]],
+                court: courtAssignment,
+                date: sessionDate
+            });
+
+            match.teamOnePlayers = [players.find(player => player._id.equals(pair[0])).firstName];
+            match.teamTwoPlayers = [players.find(player => player._id.equals(pair[1])).firstName];
+
+            matches.push(match);
+        }
+
+        console.log('Matchs à sauvegarder :', matches);
+        
+        await Match.insertMany(matches.map(match => ({
+            teamOne: match.teamOne,
+            teamTwo: match.teamTwo,
+            court: match.court,
+            date: match.date
+        })));
+
+        res.status(201).json(matches.map(match => ({
+            teamOne: match.teamOnePlayers,
+            teamTwo: match.teamTwoPlayers,
+            court: match.court,
+            date: match.date
+        })));
+    } catch (error) {
+        res.status(500).json({ message: 'Erreur lors de la création des matchs', error });
     }
-
-    res.status(201).json(matches);
-  } catch (error) {
-    res.status(500).json({ message: 'Erreur lors de la création des matchs' });
-  }
 };
