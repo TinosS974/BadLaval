@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const passport = require('passport');
@@ -12,6 +13,7 @@ const User = require('./models/User'); // Votre modèle Mongoose pour les utilis
 // Autres modèles pour les matchs, etc.
 
 const app = express();
+app.use(cors());
 
 // Middleware pour parser le JSON
 app.use(express.json());

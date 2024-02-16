@@ -10,8 +10,13 @@ const ResultController = require('./controllers/ResultController');
 router.post('/admin/register', AuthController.register);
 router.post('/admin/login', AuthController.login);
 
+// User routes
+router.get('/users', AuthController.getUsersInfos);
+
+
 // Match routes
 router.post('/matches/session', MatchesController.createMatchesForSession);
+router.get('/matches/today', MatchesController.getMatchesToday);
 
 // Result routes
 router.post('/results', ResultController.createResult);

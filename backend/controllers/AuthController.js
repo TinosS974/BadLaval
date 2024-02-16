@@ -33,3 +33,13 @@ exports.login = (req, res, next) => {
     });
   })(req, res, next);
 };
+
+exports.getUsersInfos = async (req, res) => {
+  try {
+    // Select only the firstName, lastName, and rating fields from the User model
+    const users = await User.find({}).select('firstName lastName rating');
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ message: 'Erreur lors de la récupération des utilisateurs', error });
+  }
+};
