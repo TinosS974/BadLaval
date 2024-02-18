@@ -1,6 +1,7 @@
 const User = require('../models/User'); // Assurez-vous que le chemin d'accès est correct
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
+const crypto = require('crypto'); // Module intégré pour la génération d'un mot de passe aléatoire
 
 exports.register = async (req, res) => {
   const { email, password, firstName, lastName } = req.body;
@@ -43,10 +44,6 @@ exports.getUsersInfos = async (req, res) => {
     res.status(500).json({ message: 'Erreur lors de la récupération des utilisateurs', error });
   }
 };
-
-const User = require('../models/User');
-const bcrypt = require('bcryptjs');
-const crypto = require('crypto'); // Module intégré pour la génération d'un mot de passe aléatoire
 
 exports.createUser = async (req, res) => {
   const { email, firstName, lastName, isAdmin } = req.body;
