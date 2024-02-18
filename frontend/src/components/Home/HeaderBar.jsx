@@ -15,6 +15,11 @@ const HeaderBar = () => {
       <button onClick={handleLogin} className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded">
         Login
       </button>
+      <button onClick={() => navigate('/matches')}
+        className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded"
+      >
+        Voir les matchs
+      </button>
     </div>
   );
 };

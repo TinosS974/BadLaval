@@ -12,6 +12,7 @@ router.post('/admin/login', AuthController.login);
 
 // User routes
 router.get('/users', AuthController.getUsersInfos);
+router.post('/users', AuthController.createUser);
 
 
 // Match routes

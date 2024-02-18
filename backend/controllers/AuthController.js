@@ -43,3 +43,35 @@ exports.getUsersInfos = async (req, res) => {
     res.status(500).json({ message: 'Erreur lors de la récupération des utilisateurs', error });
   }
 };
+
+const User = require('../models/User');
+const bcrypt = require('bcryptjs');
+const crypto = require('crypto'); // Module intégré pour la génération d'un mot de passe aléatoire
+
+exports.createUser = async (req, res) => {
+  const { email, firstName, lastName, isAdmin } = req.body;
+  try {
+    let user = await User.findOne({ email });
+    if (user) {
+      return res.status(400).json({ message: "L'utilisateur existe déjà" });
+    }
+
+    const randomPassword = crypto.randomBytes(8).toString('hex');
+
+    const hashedPassword = await bcrypt.hash(randomPassword, 12);
+    user = new User({
+      email,
+      password: hashedPassword,
+      firstName,
+      lastName,
+      isAdmin
+    });
+
+    await user.save();
+    // Renvoyer le mot de passe non hashé à l'administrateur pour qu'il puisse le partager avec l'utilisateur
+    res.status(201).json({ message: 'Utilisateur créé avec succès' });
+  } catch (error) {
+    res.status(500).json({ message: 'Erreur lors de la création de l’utilisateur', error });
+  }
+};
+

@@ -1,0 +1,56 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Utilisez toute la hauteur de l'écran */
+  }
+  
+  .login-form {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    width: 300px; /* Largeur fixe pour le formulaire */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .login-title {
+    text-align: center;
+    color: #333;
+  }
+  
+  .login-error {
+    color: red;
+    text-align: center;
+  }
+  
+  .login-field {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .login-field label {
+    margin-bottom: 5px;
+  }
+  
+  .login-field input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .login-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .login-button:hover {
+    background-color: #0056b3;
+  }
+  

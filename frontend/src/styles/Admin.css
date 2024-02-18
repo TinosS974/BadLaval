@@ -1,0 +1,71 @@
+/* AdminComponent.css */
+
+.admin-container {
+    max-width: 900px; /* Ajustez la largeur maximale si nécessaire */
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+  }
+  
+  .actions-container {
+    display: flex;
+    justify-content: space-between; /* Espacement entre les éléments */
+    align-items: flex-start; /* Alignement au début pour éviter le stretch */
+    gap: 20px; /* Espace entre les éléments */
+  }
+  
+  .admin-form, .generate-matches {
+    flex: 1; /* Les deux éléments prennent la même largeur */
+    margin-top: 20px;
+  }
+  
+  .admin-form div, .generate-matches {
+    margin-bottom: 15px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  input, select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  button {
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    width: 100%;
+  }
+  
+  .generate-matches-btn {
+    background-color: rebeccapurple;
+  }
+  
+  .generate-matches-btn:hover {
+    background-color: indigo;
+  }
+  
+  .create-user-btn {
+    background-color: #007bff;
+  }
+  
+  .create-user-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .message {
+    color: #d32f2f;
+    text-align: center;
+  }
+  
