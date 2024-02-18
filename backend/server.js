@@ -68,6 +68,10 @@ passport.deserializeUser((id, done) => {
   });
 });
 
+app.get('/', (req, res) => {
+  res.send('Bienvenue sur le backend de BadLaval!');
+});
+
 app.use('/api', routes);
 
 mongoose.connect(process.env.MONGODB_URI)
