@@ -12,13 +12,12 @@ exports.createResult = async (req, res) => {
       return res.status(404).json({ message: 'Match non trouvé' });
     }
 
-    // Ensure scoreTeamOne and scoreTeamTwo are compared correctly to assign winnerTeam
     const winnerTeam = scoreTeamOne > scoreTeamTwo ? teamOneIds : teamTwoIds;
 
     const newResult = new Result({
       match: matchId,
       score: { teamOne: scoreTeamOne, teamTwo: scoreTeamTwo },
-      winner: winnerTeam // Directly use the array of ObjectId(s) without wrapping it into another array
+      winner: winnerTeam
     });
 
     await newResult.save();

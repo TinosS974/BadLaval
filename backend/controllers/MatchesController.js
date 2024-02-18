@@ -85,12 +85,12 @@ exports.getMatchesToday = async (req, res) => {
   
       // Set end of the day for the date range
       const endOfDay = new Date(today);
-      endOfDay.setHours(23, 59, 59, 999); // Set to one millisecond before midnight
+      endOfDay.setHours(23, 59, 59, 999);
   
       const matches = await Match.find({
         date: {
-          $gte: today, // Greater than or equal to start of today
-          $lte: endOfDay // Less than or equal to end of today
+          $gte: today,
+          $lte: endOfDay
         }
       }).populate('teamOne teamTwo', 'firstName lastName');
   

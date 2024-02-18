@@ -1,4 +1,4 @@
-const User = require('../models/User'); // Assurez-vous que le chemin d'accès est correct
+const User = require('../models/User');
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto'); // Module intégré pour la génération d'un mot de passe aléatoire
@@ -65,7 +65,6 @@ exports.createUser = async (req, res) => {
     });
 
     await user.save();
-    // Renvoyer le mot de passe non hashé à l'administrateur pour qu'il puisse le partager avec l'utilisateur
     res.status(201).json({ message: 'Utilisateur créé avec succès' });
   } catch (error) {
     res.status(500).json({ message: 'Erreur lors de la création de l’utilisateur', error });

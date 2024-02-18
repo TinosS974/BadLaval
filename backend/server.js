@@ -7,26 +7,26 @@ const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcryptjs');
 const routes = require('./routes');
 require('dotenv').config();
+const User = require('./models/User');
 
-
-const User = require('./models/User'); // Votre modèle Mongoose pour les utilisateurs
-// Autres modèles pour les matchs, etc.
-
+console.log(process.env.FRONT_URI);
 const app = express();
+
 const corsOptions = {
-  origin: process.env.FRONT_URI, // Remplacez ceci par l'URL de votre front-end
-  credentials: true, // Cela permettra d'envoyer des cookies de session
+  origin: process.env.FRONT_URI,
+  credentials: true,
+  optionsSuccessStatus: 200
 };
 
 app.use(cors(corsOptions));
 
-// Middleware pour parser le JSON
+
 app.use(express.json());
 
 const MongoStore = require('connect-mongo');
 
 app.use(session({
-  secret: process.env.SESSION_SECRET, // Assurez-vous d'avoir défini SESSION_SECRET dans vos variables d'environnement
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
   store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI })
