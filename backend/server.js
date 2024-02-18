@@ -13,7 +13,7 @@ console.log(process.env.FRONT_URI);
 const app = express();
 
 const corsOptions = {
-  origin: process.env.FRONT_URI,
+  origin: "*",
   credentials: true,
   optionsSuccessStatus: 200
 };
