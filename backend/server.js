@@ -13,17 +13,25 @@ const User = require('./models/User'); // Votre modèle Mongoose pour les utilis
 // Autres modèles pour les matchs, etc.
 
 const app = express();
-app.use(cors());
+const corsOptions = {
+  origin: process.env.FRONT_URI, // Remplacez ceci par l'URL de votre front-end
+  credentials: true, // Cela permettra d'envoyer des cookies de session
+};
+
+app.use(cors(corsOptions));
 
 // Middleware pour parser le JSON
 app.use(express.json());
 
-// Configuration de la session
+const MongoStore = require('connect-mongo');
+
 app.use(session({
-  secret: 'secret', // Vous devriez utiliser une chaîne aléatoire complexe ici
+  secret: process.env.SESSION_SECRET, // Assurez-vous d'avoir défini SESSION_SECRET dans vos variables d'environnement
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: true,
+  store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI })
 }));
+
 
 // Passport middleware
 app.use(passport.initialize());
