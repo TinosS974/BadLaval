@@ -30,7 +30,8 @@ exports.login = (req, res, next) => {
     if (!user) return res.status(400).json({ message: 'Email ou mot de passe incorrect' });
     req.logIn(user, (err) => {
       if (err) return res.status(500).json({ message: err });
-      return res.status(200).json({ message: 'Authentifié avec succès' });
+      // Inclure le statut isAdmin dans la réponse
+      return res.status(200).json({ message: 'Authentifié avec succès', isAdmin: user.isAdmin });
     });
   })(req, res, next);
 };

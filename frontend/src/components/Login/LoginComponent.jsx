@@ -13,19 +13,23 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
+  
     try {
       const response = await axios.post(`${apiUrl}admin/login`, { email, password });
       if (response.data && response.data.message === 'Authentifié avec succès') {
+        // Stocker l'information d'authentification et si l'utilisateur est admin
         localStorage.setItem('isAuthenticated', 'true');
-        navigate('/admin');
+        localStorage.setItem('isAdmin', response.data.isAdmin.toString()); // Convertir en chaîne pour le stockage
+        // Rediriger en fonction du rôle de l'utilisateur
+        response.data.isAdmin ? navigate('/admin') : navigate('/');
       } else {
         setError('Authentification échouée, veuillez réessayer.');
       }
     } catch (err) {
       setError(err.response ? err.response.data.message : 'Une erreur est survenue lors de la connexion');
     }
-  };
+  };  
+  
 
   const handleBack = () => {
     navigate('/');
