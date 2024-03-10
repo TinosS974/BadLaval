@@ -54,3 +54,15 @@
     background-color: #0056b3;
   }
   
+  .back-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .back-button:hover {
+    background-color: #0056b3;
+  }

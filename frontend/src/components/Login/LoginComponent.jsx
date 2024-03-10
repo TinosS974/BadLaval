@@ -20,16 +20,23 @@ const Login = () => {
         // Stocker l'information d'authentification et si l'utilisateur est admin
         localStorage.setItem('isAuthenticated', 'true');
         localStorage.setItem('isAdmin', response.data.isAdmin.toString()); // Convertir en chaîne pour le stockage
+  
         // Rediriger en fonction du rôle de l'utilisateur
-        response.data.isAdmin ? navigate('/admin') : navigate('/');
+        if (response.data.isAdmin) {
+          navigate('/admin');
+        } else {
+          // Si l'utilisateur n'est pas administrateur, afficher une alerte et rediriger
+          alert("Vous n'êtes pas autorisé à accéder à cette page.");
+          navigate('/');
+        }
       } else {
         setError('Authentification échouée, veuillez réessayer.');
       }
     } catch (err) {
+      // Gérer les erreurs d'API ici, sans redirection
       setError(err.response ? err.response.data.message : 'Une erreur est survenue lors de la connexion');
     }
   };  
-  
 
   const handleBack = () => {
     navigate('/');
@@ -38,7 +45,7 @@ const Login = () => {
   return (
     <div className="login-container">
       <form onSubmit={handleLogin} className="login-form">
-        <h2 className="login-title">Connexion Admin</h2>
+        <h2 className="login-title">Connexion Administrateur</h2>
         {error && <p className="login-error">{error}</p>}
         <div className="login-field">
           <label>Email:</label>
@@ -49,7 +56,7 @@ const Login = () => {
           <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
         </div>
         <button type="submit" className="login-button">Se connecter</button>
-        <button type="button" onClick={handleBack} className="back-button">Retour</button>
+        <button type="button" onClick={handleBack} className="back-button">Revenir à l'accueil</button>
       </form>
     </div>
   );

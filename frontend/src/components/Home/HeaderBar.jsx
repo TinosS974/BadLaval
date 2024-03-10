@@ -11,7 +11,7 @@ const HeaderBar = () => {
 
   return (
     <div className="bg-blue-500 text-white p-4 flex justify-between items-center">
-      <h1 className="text-lg font-bold">My Application</h1>
+      <h1 className="text-lg font-bold">Ligue de Badminton Ulaval</h1>
       <button onClick={handleLogin} className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded">
         Login
       </button>
