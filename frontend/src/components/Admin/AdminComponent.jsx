@@ -1,16 +1,22 @@
 
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import "../../styles/Admin.css";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const AdminComponent = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
   const [message, setMessage] = useState('');
+
+  const handleBack = () => {
+    navigate('/');
+  };
 
   const handleCreateUser = async (e) => {
     e.preventDefault();
@@ -38,7 +44,7 @@ const AdminComponent = () => {
 
   return (
     <div className="admin-container">
-      <h2>Page Administrateur</h2>
+      <h1>Page Administrateur</h1>
       <button onClick={handleGenerateMatches} className="generate-matches-btn">Générer les matches pour la session</button>
       <form onSubmit={handleCreateUser} className="admin-form">
         <div>
@@ -80,6 +86,7 @@ const AdminComponent = () => {
           </select>
         </div>
         <button type="submit" className="create-user-btn">Créer un utilisateur</button>
+        <button type="button" onClick={handleBack} className="back-button">Revenir à l'accueil</button>
       </form>
       {message && <p className="message">{message}</p>}
     </div>

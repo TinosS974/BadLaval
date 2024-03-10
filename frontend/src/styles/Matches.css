@@ -1,5 +1,10 @@
 /* MatchesComponent.css */
 
+.match-page {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+}
 .matches-container {
     display: flex;
     justify-content: space-around;
@@ -29,3 +34,17 @@
     margin-bottom: 10px;
   }
   
+  .back-match {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 200px;
+    height: 50px;
+  }
+
+  .back-match:hover {
+    background-color: #0056b3;
+  }
