@@ -1,0 +1,38 @@
+.leaderboard-container {
+    max-width: 800px; /* Ajustez à la largeur souhaitée */
+    margin: auto; /* Centre le tableau */
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Ajoute une légère ombre autour du tableau */
+    background-color: white; /* Fond blanc pour le tableau */
+  }
+  
+  .leaderboard-table {
+    width: 100%; /* Utilise la largeur totale du conteneur */
+    border-collapse: collapse; /* Supprime l'espacement entre les cellules */
+    text-align: left; /* Alignement du texte à gauche */
+    font-size: 1rem; /* Taille de la police générale */
+  }
+  
+  .leaderboard-table thead tr {
+    background-color: #004085; /* Couleur de fond pour l'en-tête */
+    color: white; /* Texte blanc pour l'en-tête */
+  }
+  
+  .leaderboard-table tbody tr {
+    border-bottom: 1px solid #dee2e6; /* Ligne de séparation entre les rangées */
+  }
+  
+  .leaderboard-table tbody tr:nth-child(odd) {
+    background-color: #f8f9fa; /* Couleur de fond alternée pour les rangées */
+  }
+  
+  .leaderboard-table th,
+  .leaderboard-table td {
+    padding: 12px; /* Espacement autour du texte dans les cellules */
+  }
+  
+  .leaderboard-table td:first-child {
+    font-weight: bold; /* Rend le numéro de classement plus gras */
+    color: #007bff; /* Couleur pour le numéro de classement */
+  }
+  
